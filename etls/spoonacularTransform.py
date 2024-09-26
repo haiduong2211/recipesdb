@@ -1,14 +1,14 @@
 from pymongo import MongoClient
 
-# MongoDB connection details
-client = MongoClient("mongodb://localhost:27017/")
-db = client.cookbookapp  # Replace with your database name
 
-# Fetch all documents from the 'data' collection
-data_collection = db.data.find()
-current_data = db.data.count_documents({})
-current_recipes = db.recipes.count_documents({})
-def get_or_create_ingredient(ingredient):
+def connect_to_mongodb(database_name = "cookbookapp"):
+    # MongoDB connection details
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client[database_name]  # Replace with your database name
+    return db
+
+
+def get_or_create_ingredient(db,ingredient):
     """
     Check if the ingredient exists, if not, insert and return the id.
     """
@@ -34,7 +34,10 @@ def get_or_create_ingredient(ingredient):
         return ingredient_id
 
 
-def transform_data():
+def transform_data(db):
+    # Load the data from the 'data' collection
+    data_collection = db.data.find()
+    current_recipes = db.recipes.count_documents({})
     skipped_recipes = 0
     process_count = 0
     current_ingredients = db.ingredients.count_documents({})
@@ -54,7 +57,7 @@ def transform_data():
         
         # Process and deduplicate ingredients
         for ingredient in recipe.get("extendedIngredients", []):
-            ingredient_id = get_or_create_ingredient(ingredient)
+            ingredient_id = get_or_create_ingredient(db,ingredient)
 
             # Add the ingredient details to the ingredients list, including recipe-specific amount and unit
             ingredients_list.append({
@@ -93,14 +96,7 @@ def transform_data():
             "instructions": recipe.get("instructions", []),
         }).inserted_id
 
-        # # 3. Insert cooking instructions into 'instructions' collection
-        # for instruction in recipe.get("analyzedInstructions", []):
-        #     db.instructions.insert_one({
-        #         "recipeId": recipe_id,
-        #         "steps": instruction.get("steps", [])
-        #     })
-
-        # 4. Insert nutritional information into 'nutrition' collection
+        # 3. Insert nutritional information into 'nutrition' collection
         if "nutrition" in recipe:
             db.nutrition.insert_one({
                 "recipeId": recipe_id,
@@ -124,4 +120,5 @@ def transform_data():
 
 
 if __name__ == "__main__":
-    transform_data()
+    db = connect_to_mongodb()
+    transform_data(db)

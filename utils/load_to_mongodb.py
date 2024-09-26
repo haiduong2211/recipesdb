@@ -1,5 +1,6 @@
 import json
 from pymongo import MongoClient
+'''Load a JSON file to mongodb'''
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
