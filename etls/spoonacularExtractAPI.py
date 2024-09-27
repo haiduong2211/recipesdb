@@ -47,7 +47,7 @@ def spoonacular_API_extract():
     elif response.status_code == 401:
         print("No More authorized API key")
         #Update to the next key
-        key_no = 0
+        key_no = 1
         return
     print(f"Status code: {response.status_code}")
 
