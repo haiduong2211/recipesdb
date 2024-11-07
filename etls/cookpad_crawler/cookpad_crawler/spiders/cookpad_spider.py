@@ -29,8 +29,8 @@ class CookpadSpider(scrapy.Spider):
     def parse(self, response):
         # driver = response.meta['driver']
         driver = uc.Chrome(headless=True,use_subprocess=False)
-        driver = uc.Chrome(headless=True,use_subprocess=False)
         driver.get('https://nowsecure.nl')
+        response.meta['driver'] = driver
 
 
         #export driver to a html file
