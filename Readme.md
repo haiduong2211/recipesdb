@@ -1,5 +1,7 @@
 # Project Name: recipesdb
 
+IN PROGRESS 
+
 ## Description:
 This project focusing on ETL process to create database about recipes on the internet at the moment.
 I wish to using collected data to create insightful recipes that is loved and cooked the most. 
@@ -11,15 +13,14 @@ I wish to using collected data to create insightful recipes that is loved and co
 
 ## Technologies Used:
 - Database: Mongodb to save raw data
-- Data Warehouse: [To Be Update]
+- Data Warehouse: Postgresql
 - Language: Python
 - Tools: Selenium, Scrapy, webdriver_manager
 
 ## Installation:
 ### Prerequisites
 Before you begin, ensure you have the following installed on your machine:
-- Python 3.x
-- pip
+- Python 3.12
 - MongoDB (for database)
 
 #### 1. Clone the Repository
