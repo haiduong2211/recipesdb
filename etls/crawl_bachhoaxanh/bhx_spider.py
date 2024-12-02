@@ -105,7 +105,7 @@ class BhxSpiderSpider(scrapy.Spider):
 
     #Save the list of recipes link to the main data file. 
     def save_data(self,start_index, end_index):
-        with open('data/bachhoaxanh/recipelinks/recipe_links.csv', 'a+', newline='') as csvfile:
+        with open('data/bachhoaxanh/recipelinks/recipe_links1.csv', 'a+', newline='') as csvfile:
             fieldnames = ['no','alt', 'view_count', 'href']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             if not csvfile.tell():
