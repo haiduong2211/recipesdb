@@ -1,7 +1,8 @@
 # Ignore Python virtual environments
 venv/
 .env
-
+.gitignore
+.DS_Store
 # Ignore others folder
 others/
 
