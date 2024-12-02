@@ -1,6 +1,6 @@
 # Project Name: recipesdb
 
-IN PROGRESS 
+IN PROGRESS OF ETL. Please use for references. Any contribution is welcome ;)
 
 ## Description:
 This project focusing on ETL process to create database about recipes on the internet at the moment.
