@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS "Recipe_Dim";
+DROP TABLE IF EXISTS "User_Dim";
+DROP TABLE IF EXISTS "Ingredient_Dim";
+DROP TABLE IF EXISTS "Recipe_Fact";
+DROP TABLE IF EXISTS "Recipe_Ingredients";
+
 CREATE TABLE "Recipe_Dim" (
   "recipe_id" integer PRIMARY KEY,
   "recipe_name" varchar NOT NULL,
@@ -22,7 +28,7 @@ CREATE TABLE "User_Dim" (
 CREATE TABLE "Ingredient_Dim" (
   "ingredient_id" integer PRIMARY KEY,
   "ingredient_name" varchar NOT NULL,
-  "category" varchar
+  "category" varchar,
   "calories" float,
   "fat" float,
   "carbs" float,
@@ -59,7 +65,7 @@ CREATE TABLE "Recipe_Fact" (
   "review_count" integer NOT NULL,
   "prep_time_minutes" integer NOT NULL,
   "cook_time_minutes" integer NOT NULL,
-  "total_time_minutes" integer NOT NULL,
+  "total_time_minutes" integer NOT NULL
 );
 
 COMMENT ON COLUMN "Recipe_Dim"."source" IS 'Source of the recipe (e.g., website, author, link, view_count)';
@@ -76,11 +82,3 @@ ALTER TABLE "Recipe_Fact" ADD FOREIGN KEY ("date_id") REFERENCES "Date_Dim" ("da
 
 ALTER TABLE "Recipe_Ingredients" ADD FOREIGN KEY ("recipe_id") REFERENCES "Recipe_Dim" ("recipe_id");
 ALTER TABLE "Recipe_Ingredients" ADD FOREIGN KEY ("ingredient_id") REFERENCES "Ingredient_Dim" ("ingredient_id");
-
--- -- Indexes for frequently queried columns
--- CREATE INDEX idx_recipe_fact_recipe_id ON "Recipe_Fact" ("recipe_id");
--- CREATE INDEX idx_recipe_fact_user_id ON "Recipe_Fact" ("user_id");
--- CREATE INDEX idx_recipe_fact_date_id ON "Recipe_Fact" ("date_id");
-
--- CREATE INDEX idx_recipe_ingredients_recipe_id ON "Recipe_Ingredients" ("recipe_id");
--- CREATE INDEX idx_recipe_ingredients_ingredient_id ON "Recipe_Ingredients" ("ingredient_id");

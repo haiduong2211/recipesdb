@@ -3,7 +3,7 @@
 IN PROGRESS OF ETL. Please use for references. Any contribution is welcome ;)
 
 ## Description:
-This project focusing on ETL process to create database about recipes on the internet at the moment.
+This project focusing gon ETL process to create database about recipes on the internet at the moment.
 I wish to using collected data to create insightful recipes that is loved and cooked the most. 
 
 ## Data Sources:
