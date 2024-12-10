@@ -1,8 +1,8 @@
 import json
 from pymongo import MongoClient
 import os
+import csv
 def load_files_to_mongodb(directory):
-
     # Connect to MongoDB
     client = MongoClient('mongodb://localhost:27017/')
     db = client['cookbookapp']
@@ -36,3 +36,17 @@ def load_files_to_mongodb(directory):
 
 # # Call the function to load files to MongoDB
 # load_files_to_mongodb(directory)
+
+def import_csv_to_mongodb(collection, csv_file):
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['recipedb_raw']
+    collection = db[collection]
+    # Open the CSV file
+    with open(csv_file, 'r') as file:
+        # Read the CSV data
+        csv_data = csv.DictReader(file)
+        
+        # Iterate over each row in the CSV data
+        for row in csv_data:
+            # Insert the row into MongoDB collection
+            collection.insert_one(row)
