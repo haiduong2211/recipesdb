@@ -1,6 +1,10 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lit, explode, year, month, dayofmonth, dayofweek
 import psycopg2
+from dotenv import load_dotenv
+import os
+# Load environment variables from .env file
+load_dotenv()
 
 def spoonacluar_transform():
     # Initialize Spark session
@@ -10,13 +14,13 @@ def spoonacluar_transform():
         .config("spark.mongodb.read.database", "recipedb_raw") \
         .getOrCreate()
 
-    # PostgreSQL connection details
+    # PostgreSQL connection details from environment variables
     conn = psycopg2.connect(
-        host="recipedb-posgresql.c968e6o62c2l.ap-southeast-1.rds.amazonaws.com",
-        port=5432,
-        database="recipedb",
-        user="recipedb_admin",
-        password="Hainhu99"
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
     )
 
     # Load raw data from MongoDB
