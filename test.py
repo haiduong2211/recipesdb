@@ -4,6 +4,10 @@ import psycopg2
 import os
 from utils.convert_json_multiline import convert_multiline_json_to_valid_json
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+
 
 def spoonacular_transform():
     # Initialize Spark session
@@ -14,16 +18,15 @@ def spoonacular_transform():
         .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:10.3.0") \
         .getOrCreate()
 
-
-    # PostgreSQL connection details
+    load_dotenv()
+    # PostgreSQL connection details from environment variables
     conn = psycopg2.connect(
-        host="recipedb-posgresql.c968e6o62c2l.ap-southeast-1.rds.amazonaws.com",
-        port=5432,
-        database="recipedb",
-        user="recipedb_admin",
-        password="Hainhu99"
-    )
-
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
+)
     # Read raw recipes data from MongoDB
     raw_recipes = spark.read.format("mongodb").option("collection", "spoonacular_raw").load()
 
