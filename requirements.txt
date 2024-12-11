@@ -115,6 +115,8 @@ propcache==0.2.0
 Protego==0.3.1
 protobuf==5.28.3
 psutil==6.1.0
+psycopg2==2.9.10
+psycopg2-binary==2.9.10
 py4j==0.10.9.7
 pyasn1==0.6.1
 pyasn1_modules==0.4.1
@@ -131,7 +133,7 @@ pyspark==3.5.3
 python-daemon==3.1.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
-python-multipart==0.0.17
+python-multipart==0.0.18
 python-nvd3==0.16.0
 python-slugify==8.0.4
 pytz==2024.2
@@ -179,7 +181,6 @@ w3lib==2.2.1
 webdriver-manager==4.0.2
 websocket-client==1.8.0
 websockets==13.1
-Werkzeug==2.2.3
 wheel==0.44.0
 wirerope==0.4.8
 wrapt==1.17.0
