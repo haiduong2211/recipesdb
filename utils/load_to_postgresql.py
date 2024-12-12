@@ -1,36 +1,50 @@
 import psycopg2
+import os
+import dotenv
 
-# Connect to the PostgreSQL database
-conn = psycopg2.connect(
-    host="your_host",
-    port="your_port",
-    database="your_database",
-    user="your_username",
-    password="your_password"
-)
+# Load environment variables from .env file
+dotenv.load_dotenv()
 
-# Create a cursor object
-cur = conn.cursor()
-
-# Define the SQL query to create a table
-create_table_query = '''
-    CREATE TABLE IF NOT EXISTS recipes (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255),
-        ingredients TEXT,
-        instructions TEXT
+def connect_to_postgresql():
+    """
+    Connect to the PostgreSQL database and return the connection and cursor objects.
+    """
+    conn = psycopg2.connect(
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
     )
-'''
+    cur = conn.cursor()
+    return conn, cur
 
-# Execute the create table query
-cur.execute(create_table_query)
+def create_table():
+    """
+    Create the recipes table in the PostgreSQL database.
+    """
+    # Get the connection and cursor
+    conn, cur = connect_to_postgresql()
 
-# Load transformed data into the table
-with open('transformed_data.csv', 'r') as file:
-    next(file)  # Skip the header row
-    cur.copy_from(file, 'recipes', sep=',')
+    # # Define the SQL query to create a table
+    # create_table_query = '''
+    #     CREATE TABLE IF NOT EXISTS recipes (
+    #         id SERIAL PRIMARY KEY,
+    #         name VARCHAR(255) NOT NULL,
+    #         ingredients TEXT,
+    #         instructions TEXT
+    #     )
+    # '''
 
-# Commit the changes and close the connection
-conn.commit()
-cur.close()
-conn.close()
+    # Execute the create table query
+    cur.execute(create_table_query)
+
+    # Commit the transaction
+    conn.commit()
+
+    # Close the cursor and connection
+    cur.close()
+    conn.close()
+
+# Call the create_table function
+create_table()
