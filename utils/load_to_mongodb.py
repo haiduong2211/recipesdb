@@ -50,3 +50,22 @@ def import_csv_to_mongodb(collection, csv_file):
         for row in csv_data:
             # Insert the row into MongoDB collection
             collection.insert_one(row)
+
+def import_json_to_mongodb(filepath,database,collection):
+    # Connect to MongoDB
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client[database]
+    collection = db[collection]
+    
+
+    # Load JSON file
+    with open(filepath) as file:
+        data = json.load(file)
+
+    # Insert JSON data into MongoDB
+    collection.insert_many(data)
+    print('Data loaded')
+
+    # Close the MongoDB connection
+    client.close()
+    

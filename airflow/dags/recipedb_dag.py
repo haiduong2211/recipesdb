@@ -9,9 +9,9 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, '..', '..'))
 sys.path.insert(0, parent_dir)
 
-from etls.crawl_bachhoaxanh import bhx_spider
+from etls.extract.crawl_bachhoaxanh import bhx_spider
 # from etls.crawl_cookpad import crawl_cookpad
-from etls.api_spoonacular import spoonacularExtractAPI
+from etls.extract.api_spoonacular import spoonacularExtractAPI
 from utils import load_to_mongodb, load_to_postgresql
 # from etls.transforms import transform_bachhoaxanh
 # from etls.transforms.transform_cookpad import transform_cookpad
